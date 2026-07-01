@@ -328,30 +328,6 @@ def flip_regions(df_mds, flip_status=True, flip_start=29305433, flip_end=3237893
         df2 = df_mds
     return df2
 
-# def plot_mds(df_mds, states, Z, data_path, POP, CHROM):
-#     plt.figure(figsize = (16,8))
-#     plt.subplot(2,1,1)
-#     for i in states:
-#         want = (Z == i)
-#         x = df_mds["mid"].iloc[want]/1e6
-#         y = df_mds["mds01"].iloc[want]
-#         plt.plot(x, y, '.')
-#     plt.legend(states, fontsize=16)
-#     plt.grid(True)
-#     plt.xlabel("{}_{}".format(POP, CHROM), fontsize=16)
-#     plt.ylabel("MDS01", fontsize=16)
-#     plt.subplot(2,1,2)
-#     for i in states:
-#         want = (Z == i)
-#         x = df_mds["mid"].iloc[want]/1e6
-#         y = df_mds["mds02"].iloc[want]
-#         plt.plot(x, y, '.')
-#     plt.legend(states, fontsize=16)
-#     plt.grid(True)
-#     plt.xlabel("{}_{}".format(POP, CHROM), fontsize=16)
-#     plt.ylabel("MDS02", fontsize=16)
-#     plt.savefig("{}{}_{}.pdf".format(data_path, POP, CHROM), format='pdf')
-#     return None
 
 def plot_mds(df_mds, states, Z, data_path, POP, CHROM):
     plt.figure(figsize=(16, 8))
