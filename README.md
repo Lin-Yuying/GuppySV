@@ -9,7 +9,7 @@ detailed pipeline to be done
    sh 01.genotyping.sh
    ```
   
-2. Local PCA using lostruct
+2. Running localPCA using lostruct
    ```
    # plot all pops 
    Rscript 02.1.plot_lostrcut.R
@@ -22,7 +22,7 @@ detailed pipeline to be done
    sh 03.run_pca_admixture.sh 
    ```
    
-4. demogrphic history
+4. Inferring demogrphic history
    ```
    sh 04.run_psmc.sh
    ```
