@@ -13,11 +13,21 @@ detailed pipeline to be done
    ```
    # plot all pops 
    Rscript 02.1.plot_lostrcut.R
-   # or do one population one chromsome for a single run
+   # or do one population one chromosome for a single run
    Rscript 02.2.single_lostruct.R [pop] [chr]
    ```
    
 3. PCA and admixture
    ```
-   sh 03.run_PCA_Admixture.sh 
+   sh 03.run_pca_admixture.sh 
+   ```
+   
+4. demogrphic history
+   ```
+   sh 04.run_psmc.sh
+   ```
+   
+5. Calculating Fst and nucleotide diversity
+   ```
+   sh 05.calc_fst_pi.sh.
    ```
