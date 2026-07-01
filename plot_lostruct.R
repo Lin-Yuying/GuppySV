@@ -1,15 +1,14 @@
-setwd("~/localPCA/")
-setwd("/Users/rainlam")
+setwd("~/3.SV/localPCA/")
 library(ggplot2)
 library(tidyverse)
-pops <-c("Aripo_Quare", "Aripo_Yarra", "Quare_Yarra")
+pops <-c("Aripo", "Yarra", "Quare", "all")
 chr <- paste('LG', seq(1,23), sep = '')
 window.size <- 100
 
-devtools::load_all("~/localPCA/local_pca/lostruct/R")
+devtools::load_all("~/3.SV/localPCA/local_pca/lostruct/R")
 
 for (pop in pops) {
-  genome.chr <- paste(pop, chr, sep='.') #"Quare_Yarra.LG1" 
+  genome.chr <- paste(pop, chr, sep='.') 
   win.regions <- readRDS(paste(genome.chr, window.size, "lostruct.windows.rds", sep='.'))
   mds <- readRDS(paste(genome.chr, window.size,'mds', sep='.'))
   mds.coords <- mds$points
