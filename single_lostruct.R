@@ -1,6 +1,5 @@
 setwd("~/3.SV/13.localPCA")
 args = commandArgs(trailingOnly=TRUE)
-#setwd("/Users/rainlam")
 library(ggplot2)
 library(tidyverse)
 library(dplyr)
@@ -9,9 +8,7 @@ library(dplyr)
 ###########################################################
 ################## 1. local PCA ###########################
 ###########################################################
-#pop <- "Aripo" #
 pop <- args[1]
-#chr <- "LG4"   #
 chr <- args[2]
 window_size <- 100
 min_windows <- 3
