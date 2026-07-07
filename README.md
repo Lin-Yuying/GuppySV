@@ -27,7 +27,7 @@ detailed pipeline to be done
    sh 04.run_psmc.sh
    ```
    
-5. Calculating Fst and nucleotide diversity using [VCFtools]((https://vcftools.github.io/index.html)
+5. Calculating Fst and nucleotide diversity using [VCFtools](https://vcftools.github.io/index.html)
    ```
    sh 05.calc_fst_pi.sh.
    ```
