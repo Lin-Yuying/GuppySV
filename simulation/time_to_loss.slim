@@ -1,0 +1,134 @@
+initialize() {
+	//setwd("~/GoogleDrive/PostDoc Vancouver/Yuying/SLiM_inversions");
+	setwd("~/GoogleDrive/PostDoc Vancouver/Yuying/SLiM_inversions");
+
+	if (exists("slimgui")) defineConstant("k", 20); // rescaling factor k
+
+	initializeMutationRate(0.0);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	m1.convertToSubstitution = F; 
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// single bp chromosome
+	initializeGenomicElement(g1, 0, 0);
+	initializeRecombinationRate(0.0);
+	
+	// read in a CSV of the demography
+	demo = readCSV("simple_demography.csv", colTypes = "iii");
+	// rescale
+	demo.setValue("generation", pmax(1, asInteger(demo.getValue("generation") / k)));
+	demo.setValue("Ne", pmax(1, asInteger(demo.getValue("Ne") / k)));	
+	
+	demo_steps = sort(unique(demo.getValue("generation")));
+	
+	defineGlobal("Demo", demo);
+	defineGlobal("DemoSteps", demo_steps);
+	
+   defineGlobal("p1DONE", F);
+   defineGlobal("p2DONE", F);
+   defineGlobal("p3DONE", F);
+}
+
+1 first() {
+	sim.addSubpop("p1", 1);
+	sim.addSubpop("p2", 1);
+	sim.addSubpop("p3", 1);
+	
+	community.rescheduleScriptBlock(s1, ticks = DemoSteps);
+}
+
+1 late() {
+    // make everyone heterozygous in each population -> AF = 0.5 exactly
+    MUT = p1.individuals[0].haploidGenome1.addNewMutation(m1, 0.0, 0);
+    p1.individuals.haploidGenome1.addMutations(MUT);
+    p2.individuals.haploidGenome1.addMutations(MUT);
+    p3.individuals.haploidGenome1.addMutations(MUT);
+    
+    defineGlobal("MUT", MUT);
+}
+
+late() {
+	// only run this checking code once per 100 generations
+	if (sim.cycle % 100 == 0) {
+		if (!p1DONE) {
+			muts = p1.haplosomes.containsMutations(MUT);
+			if (all(muts) | !any(muts)) {
+				defineGlobal("p1END", sim.cycle * k);
+				defineGlobal("p1DONE", T);
+				p1.setSubpopulationSize(0);
+			}
+		}
+		if (!p2DONE) {
+			muts = p2.haplosomes.containsMutations(MUT);
+			if (all(muts) | !any(muts)) {
+				defineGlobal("p2END", sim.cycle * k);
+				defineGlobal("p2DONE", T);
+				p2.setSubpopulationSize(0);
+			}
+		}
+		if (!p3DONE) {
+			muts = p3.haplosomes.containsMutations(MUT);
+			if (all(muts) | !any(muts)) {
+				defineGlobal("p3END", sim.cycle * k);
+				defineGlobal("p3DONE", T);
+				p3.setSubpopulationSize(0);
+			}
+		}
+		if (p1DONE & p2DONE & p3DONE) {
+			cat(c(p1END, p2END, p3END));
+			community.simulationFinished();
+		}
+	}
+}
+
+1e7 late() {
+	// if still running at 10M generations, end and print
+	if (p1DONE) {
+		cat(p1END);
+	} else {
+		cat(sim.cycle * k);
+	}
+	if (p2DONE) {
+		cat(p2END);
+	} else {
+		cat(sim.cycle * k);
+	}
+	if (p3DONE) {
+		cat(p3END);
+	} else {
+		cat(sim.cycle * k);
+	}
+	
+	sim.simulationFinished();
+}
+
+// Callback, only active when population size needs to be updated
+s1 early() {
+	g = sim.cycle;
+
+	if (!p1DONE) {
+		p1.setSubpopulationSize(
+			Demo.subsetRows(
+				Demo.getValue("population") == 1 & Demo.getValue("generation") == g
+			).getValue("Ne")[0]
+		);
+	}
+	if (!p2DONE) {
+		p2.setSubpopulationSize(
+			Demo.subsetRows(
+				Demo.getValue("population") == 2 & Demo.getValue("generation") == g
+			).getValue("Ne")[0]
+		);
+	}
+	if (!p3DONE) {
+		p3.setSubpopulationSize(
+			Demo.subsetRows(
+				Demo.getValue("population") == 3 & Demo.getValue("generation") == g
+			).getValue("Ne")[0]
+		);
+	}
+}
