@@ -29,10 +29,10 @@ detailed pipeline to be done
    
 5. Calculating Fst and nucleotide diversity using [VCFtools](https://vcftools.github.io/index.html)
    ```
-   sh 05.calc_fst_pi.sh.
+   sh 05.calc_fst_pi.sh 
    ```
 
-7. Calculating SV age
+7. Calculating SV age using [pixy](https://github.com/ksamuk/pixy)
    ```
-   sh 06.calc_sv_age.sh
+   sh cal_inv_age.sh
    ```
