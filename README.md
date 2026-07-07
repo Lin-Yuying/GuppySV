@@ -39,4 +39,4 @@ Scripts for Lin, Y., van der Bijl, W., Mank, J. E. Sexual selection maintains an
    
 8. Simulation
 9. Permutation test
-10. Breakpoint verification using [Longranger](https://github.com/10XGenomics/longranger) and Loupe 2.21 
+10. Breakpoint verification using [Longranger](https://github.com/10XGenomics/longranger) and Loupe 2.1.2 
