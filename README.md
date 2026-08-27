@@ -34,9 +34,13 @@ Scripts for Lin, Y., van der Bijl, W., Mank, J. E. Sexual selection maintains an
 
 7. Calculating SV age using [pixy](https://github.com/ksamuk/pixy)
    ```
-   sh cal_inv_age.sh
+   sh 06.cal_inv_age.sh
    ```
    
-8. Simulation
+8. Simulation, check the /simulation folder for details.
 9. Permutation test
-10. Breakpoint verification using [Longranger](https://github.com/10XGenomics/longranger) and Loupe 2.1.2 
+   ```
+   sh run_perm_test.sh
+   ```
+10. Breakpoint verification using [Longranger](https://github.com/10XGenomics/longranger) and Loupe 2.1.2
+11. Plotting, see details in Fig*.ipynb or SuppleFig*.ipynb.
